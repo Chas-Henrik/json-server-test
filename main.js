@@ -11,18 +11,51 @@ const newData = {
   "number": "09033332933"
 }
 
+const replaceData = {
+  "id": "2",
+  "name": "Jerry Williams",
+  "email": "jerrywilliams@gmail.com",
+  "number": "08111111111"
+}
+
+const patchData = {
+  "number": "1234567890"
+}
+
 try {
+  let response;
+  let updatedData;
   const data = await axios.get("http://localhost:8000/users/");
   console.log("data", data);
-  const response = await axios.post("http://localhost:8000/users/", newData, {
+  response = await axios.post("http://localhost:8000/users/", newData, {
     headers: {
       'Content-Type': 'application/json'
     }
   });
   console.log("response", response);
 
-  const updatedData = await axios.get("http://localhost:8000/users/");
+  response = await axios.put("http://localhost:8000/users/2", replaceData, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  console.log("response", response);
+
+  response = await axios.patch("http://localhost:8000/users/3", patchData, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  console.log("response", response);
+  
+  updatedData = await axios.get("http://localhost:8000/users/");
   console.log("updatedData", updatedData);
+
+  response = await axios.delete("http://localhost:8000/users/5");
+
+  updatedData = await axios.get("http://localhost:8000/users/");
+  console.log("updatedData", updatedData);
+
 } catch (error) {
   console.error("Error fetching data", error);
 }
